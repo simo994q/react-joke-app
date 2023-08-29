@@ -3,7 +3,7 @@ import './App.css'
 
 function App() {
 
-  const [joke, setJoke] = useState({})
+  const [joke, setJoke] = useState()
   const [newJokeState, setNewJokeState] = useState(false)
 
   useEffect(() => {
@@ -11,12 +11,15 @@ function App() {
     fetch(url).then(res => res.json()).then(data => setJoke(data))
   }, [newJokeState])
 
-
   return (
     <>
-      <h2>{joke.setup}</h2>
-      <h3>{joke.punchline}</h3>
-      <button onClick={() => {newJokeState ? setNewJokeState(false) : setNewJokeState(true)}}>New joke</button>
+      {joke &&
+        <>
+          <h2>{joke.setup}</h2>
+          <h3>{joke.punchline}</h3>
+        </>
+      }
+      <button onClick={() => { newJokeState ? setNewJokeState(false) : setNewJokeState(true) }}>New joke</button>
     </>
   )
 }
